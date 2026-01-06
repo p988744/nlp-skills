@@ -1,0 +1,199 @@
+#!/usr/bin/env python3
+"""
+{{ task_name }} 評估腳本
+
+自動生成，可根據需要調整。
+"""
+
+import json
+import yaml
+from pathlib import Path
+from collections import Counter
+from datetime import datetime
+
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from peft import PeftModel
+from sklearn.metrics import classification_report, confusion_matrix
+
+
+def load_model(base_model: str, adapter_path: str):
+    """載入微調後的模型"""
+    print(f"載入基礎模型: {base_model}")
+    model = AutoModelForCausalLM.from_pretrained(
+        base_model,
+        torch_dtype=torch.bfloat16,
+        device_map='auto',
+        trust_remote_code=True,
+    )
+
+    print(f"載入 LoRA adapter: {adapter_path}")
+    model = PeftModel.from_pretrained(model, adapter_path)
+
+    tokenizer = AutoTokenizer.from_pretrained(base_model)
+
+    return model, tokenizer
+
+
+def generate(model, tokenizer, messages, max_new_tokens=50):
+    """生成回應"""
+    prompt = tokenizer.apply_chat_template(
+        messages,
+        tokenize=False,
+        add_generation_prompt=True,
+        {% if model_family == 'qwen3' %}
+        enable_thinking=False,
+        {% endif %}
+    )
+
+    inputs = tokenizer(prompt, return_tensors='pt').to(model.device)
+
+    with torch.no_grad():
+        outputs = model.generate(
+            **inputs,
+            max_new_tokens=max_new_tokens,
+            do_sample=False,
+            pad_token_id=tokenizer.pad_token_id,
+        )
+
+    response = tokenizer.decode(
+        outputs[0][inputs['input_ids'].shape[1]:],
+        skip_special_tokens=True
+    )
+
+    return response.strip()
+
+
+def parse_output(output: str) -> str:
+    """後處理輸出"""
+    output = output.strip()
+    {% for label in labels %}
+    if '{{ label }}' in output:
+        return '{{ label }}'
+    {% endfor %}
+    return output
+
+
+def evaluate(model, tokenizer, test_data):
+    """評估模型"""
+    predictions = []
+    references = []
+    errors = []
+
+    for i, sample in enumerate(test_data):
+        messages = [
+            {"role": "system", "content": "{{ system_prompt }}"},
+            {"role": "user", "content": sample['input']}
+        ]
+
+        output = generate(model, tokenizer, messages)
+        prediction = parse_output(output)
+        expected = sample['output']
+
+        predictions.append(prediction)
+        references.append(expected)
+
+        if prediction != expected:
+            errors.append({
+                'input': sample['input'],
+                'expected': expected,
+                'prediction': prediction,
+                'raw_output': output,
+            })
+
+        if (i + 1) % 50 == 0:
+            print(f"已處理 {i + 1}/{len(test_data)}")
+
+    return predictions, references, errors
+
+
+def main():
+    # ========== 配置 ==========
+    BASE_MODEL = "{{ base_model }}"
+    ADAPTER_PATH = "models/adapter"
+    TEST_FILE = "data/test.jsonl"
+    LABELS = {{ labels }}
+
+    # ========== 載入模型 ==========
+    model, tokenizer = load_model(BASE_MODEL, ADAPTER_PATH)
+
+    # ========== 載入測試資料 ==========
+    print(f"載入測試資料: {TEST_FILE}")
+    test_data = []
+    with open(TEST_FILE, encoding='utf-8') as f:
+        for line in f:
+            test_data.append(json.loads(line))
+    print(f"測試樣本: {len(test_data)}")
+
+    # ========== 評估 ==========
+    print("開始評估...")
+    predictions, references, errors = evaluate(model, tokenizer, test_data)
+
+    # ========== 計算指標 ==========
+    report = classification_report(
+        references,
+        predictions,
+        labels=LABELS,
+        output_dict=True
+    )
+
+    cm = confusion_matrix(references, predictions, labels=LABELS)
+
+    # ========== 輸出結果 ==========
+    print("\n" + "=" * 50)
+    print("評估結果")
+    print("=" * 50)
+
+    print(f"\nMacro-F1: {report['macro avg']['f1-score']:.2%}")
+    print(f"Accuracy: {report['accuracy']:.2%}")
+
+    print("\n各類別 F1:")
+    for label in LABELS:
+        print(f"  {label}: {report[label]['f1-score']:.2%}")
+
+    print("\n混淆矩陣:")
+    print(cm)
+
+    # ========== 儲存報告 ==========
+    result = {
+        'task_name': '{{ task_name }}',
+        'evaluation_date': datetime.now().isoformat(),
+        'model_path': ADAPTER_PATH,
+        'test_samples': len(test_data),
+        'metrics': {
+            'macro_f1': report['macro avg']['f1-score'],
+            'accuracy': report['accuracy'],
+            'per_class': {
+                label: report[label]['f1-score'] for label in LABELS
+            }
+        },
+        'confusion_matrix': cm.tolist(),
+        'pass_criteria': {
+            '{{ primary_metric }}': {
+                'threshold': {{ threshold }},
+                'actual': report['macro avg']['f1-score'],
+                'passed': report['macro avg']['f1-score'] >= {{ threshold }}
+            }
+        },
+        'error_samples': errors[:10]  # 前 10 個錯誤樣本
+    }
+
+    output_path = Path('benchmarks/results/evaluation_report.yaml')
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(output_path, 'w', encoding='utf-8') as f:
+        yaml.dump(result, f, allow_unicode=True, default_flow_style=False)
+
+    print(f"\n報告已儲存: {output_path}")
+
+    # ========== 判定結果 ==========
+    print("\n" + "=" * 50)
+    if result['pass_criteria']['{{ primary_metric }}']['passed']:
+        print("✅ 評估通過!")
+    else:
+        print("❌ 評估未通過，需要改善")
+    print("=" * 50)
+
+
+if __name__ == "__main__":
+    main()

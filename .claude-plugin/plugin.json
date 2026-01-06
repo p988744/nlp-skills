@@ -1,0 +1,24 @@
+{
+  "name": "nlp-skills",
+  "description": "NLP Skills Marketplace - LLM fine-tuning 工作流程與工具集",
+  "version": "2.0.0",
+  "author": {
+    "name": "Weifan Liao",
+    "email": "weifanliao@eland.com.tw"
+  },
+  "homepage": "https://github.com/p988744/nlp-skills",
+  "repository": "https://github.com/p988744/nlp-skills.git",
+  "license": "MIT",
+  "keywords": [
+    "llm",
+    "fine-tuning",
+    "lora",
+    "orpo",
+    "nlp",
+    "huggingface",
+    "qwen",
+    "chinese-nlp",
+    "sentiment-analysis",
+    "ner"
+  ]
+}
