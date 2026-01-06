@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.0.1] - 2026-01-06
+
+### Added
+- **Slash Command**: 新增 `/finetune-llm` 命令，支援 `create` 和 `iterate` 參數
+
+---
+
 ## [2.0.0] - 2026-01-06
 
 ### Added
