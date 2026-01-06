@@ -1,100 +1,101 @@
 # NLP Skills Marketplace
 
-Claude Code skills for NLP tasks - LLM fine-tuning 教練式引導工作流程。
+Claude Code plugin for NLP tasks - LLM fine-tuning with coaching-style guidance workflow.
 
-## v0.3 新特色
+## v0.3 Highlights
 
-- **教練式引導**：主動探索痛點，引導明確目標，推薦最佳方案
-- **多任務管理**：支援多個訓練任務的版本追蹤和比較
-- **資料來源追蹤**：可重現的資料管線（DB、API、爬取、LLM 生成）
-- **智能 Agents**：自動診斷問題、分析結果、推薦改善
+- **Coaching-style Guidance**: Explore pain points, clarify goals, recommend optimal solutions
+- **Multi-task Management**: Version tracking and comparison for multiple training tasks
+- **Data Source Tracking**: Reproducible data pipelines (DB, API, web scraping, LLM generation)
+- **Intelligent Agents**: Auto-diagnose issues, analyze results, recommend improvements
 
-## 安裝方式
+## Installation
 
-### 方法 1：透過 Marketplace 安裝（推薦）
+### Method 1: Via Marketplace (Recommended)
 
 ```bash
-# 添加 nlp-skills marketplace
+# Add nlp-skills marketplace
 /plugin marketplace add p988744/nlp-skills
 
-# 安裝
+# Install
 /plugin install nlp-skills
 ```
 
-### 方法 2：直接指定目錄
+### Method 2: Local Directory
 
 ```bash
 claude --plugin-dir /path/to/nlp-skills
 ```
 
-## 組件架構
+## Components
 
-### Skills (4 個專精領域)
+### Skills (5 Specialized Domains)
 
-| Skill | 觸發詞 | 說明 |
-|-------|--------|------|
-| **llm-coach** | 「訓練模型」「fine-tune」「優化效能」 | 教練式引導主入口 |
-| **llm-knowledge** | 「什麼是 LoRA」「模型比較」 | 獨立知識庫 |
-| **task-manager** | 「列出任務」「版本比較」 | 多任務管理 |
-| **data-pipeline** | 「資料來源」「資料從哪裡來」 | 資料管線配置 |
+| Skill | Triggers | Description |
+|-------|----------|-------------|
+| **llm-coach** | "train model", "fine-tune", "optimize" | Coaching guidance entry point |
+| **llm-knowledge** | "what is LoRA", "compare models" | Knowledge base |
+| **task-manager** | "list tasks", "compare versions" | Multi-task management |
+| **data-pipeline** | "data source", "where does data come from" | Data pipeline configuration |
+| **finetune-llm** | "fine-tune LLM", "training workflow" | Overview skill |
 
-### Commands (7 個快捷指令)
+### Commands (7 Quick Actions)
 
-| 指令 | 說明 |
-|------|------|
-| `/coach` | 啟動教練式對話 |
-| `/tasks` | 列出所有任務狀態 |
-| `/new-task` | 建立新任務 |
-| `/data-source` | 配置資料來源 |
-| `/generate` | 生成專案結構 |
-| `/evaluate` | 執行評估分析 |
-| `/deploy` | 部署模型 |
+| Command | Description |
+|---------|-------------|
+| `/nlp-skills:coach` | Start coaching dialogue |
+| `/nlp-skills:tasks` | List all task status |
+| `/nlp-skills:new-task` | Create new task |
+| `/nlp-skills:data-source` | Configure data sources |
+| `/nlp-skills:generate` | Generate project structure |
+| `/nlp-skills:evaluate` | Run evaluation analysis |
+| `/nlp-skills:deploy` | Deploy model |
 
-### Agents (4 個自主助手)
+### Agents (4 Intelligent Assistants)
 
-| Agent | 觸發時機 | 功能 |
-|-------|----------|------|
-| **goal-clarifier** | 模糊需求 | 主動引導釐清目標 |
-| **data-source-advisor** | 詢問資料來源 | 協助配置資料管線 |
-| **problem-diagnoser** | 效能問題 | 自動診斷推薦改善 |
-| **result-analyzer** | 訓練/評估後 | 分析結果決策建議 |
+| Agent | Trigger | Function |
+|-------|---------|----------|
+| **goal-clarifier** | Vague requirements | Proactively clarify goals |
+| **data-source-advisor** | Data source questions | Help configure data pipelines |
+| **problem-diagnoser** | Performance issues | Auto-diagnose and recommend fixes |
+| **result-analyzer** | Post-training/evaluation | Analyze results, decision support |
 
-## 使用方式
+## Usage
 
-### 快速開始
+### Quick Start
 
-```
-# 教練引導
-我想訓練一個模型
+```bash
+# Coaching guidance
+"I want to train a model"
 
-# 直接建立
-/new-task entity-sentiment
+# Direct creation
+/nlp-skills:new-task entity-sentiment
 
-# 列出任務
-/tasks
-```
-
-### 完整流程
-
-```
-1. 啟動教練引導          → 釐清目標、痛點、資源
-2. 配置資料來源          → 設定 DB、API、爬取、LLM 生成
-3. 生成專案              → 產生腳本、配置、文件
-4. 準備資料              → 執行資料生成腳本
-5. 訓練模型              → 執行訓練腳本
-6. 評估效能              → 分析結果、版本比較
-7. 部署上線              → HuggingFace、Ollama
+# List tasks
+/nlp-skills:tasks
 ```
 
-## 專案結構
-
-每個任務是完全獨立的自包含專案：
+### Complete Workflow
 
 ```
-{任務名稱}/
-├── task.yaml               # 任務定義
-├── data_source.yaml        # 資料來源配置（可重現）
-├── versions/               # 版本追蹤（完整 lineage）
+1. Start coaching        → Clarify goals, pain points, resources
+2. Configure data source → Set up DB, API, scraping, LLM generation
+3. Generate project      → Create scripts, configs, docs
+4. Prepare data          → Run data generation scripts
+5. Train model           → Execute training scripts
+6. Evaluate performance  → Analyze results, compare versions
+7. Deploy                → HuggingFace, Ollama
+```
+
+## Task Project Structure
+
+Each task is a fully independent, self-contained project:
+
+```
+{task-name}/
+├── task.yaml               # Task definition
+├── data_source.yaml        # Data source config (reproducible)
+├── versions/               # Version tracking (full lineage)
 │   ├── v1/
 │   │   ├── config.yaml
 │   │   ├── data_snapshot.json
@@ -108,9 +109,9 @@ claude --plugin-dir /path/to/nlp-skills
 └── benchmarks/
 ```
 
-## 資料來源配置
+## Data Source Configuration
 
-v0.3 的核心特色是可重現的資料管線：
+Core feature of v0.3 - reproducible data pipelines:
 
 ```yaml
 # data_source.yaml
@@ -124,43 +125,66 @@ sources:
 
   - type: web_scrape
     urls: ["https://..."]
-    keywords: ["金融", "股票"]
+    keywords: ["finance", "stock"]
 
   - type: llm_generated
     model: gpt-4o
     count: 500
 ```
 
-## 內建知識庫
+## Built-in Knowledge Base
 
-減少上網搜尋，內建 2025-2026 最新知識：
+Reduce web searches with built-in 2025-2026 knowledge:
 
-| 類別 | 內容 |
-|------|------|
-| **模型架構** | Dense vs MoE、MLA |
-| **基礎模型** | Qwen3、DeepSeek-V3/R1、Llama 3.3 |
-| **訓練方法** | SFT、LoRA、QLoRA、ORPO、DPO |
-| **任務類型** | 情感分析、NER、關係抽取 |
-| **問題排解** | 過擬合、類別不平衡、準確率低 |
+| Category | Content |
+|----------|---------|
+| **Architecture** | Dense vs MoE, MLA |
+| **Base Models** | Qwen3, DeepSeek-V3/R1, Llama 3.3 |
+| **Training Methods** | SFT, LoRA, QLoRA, ORPO, DPO |
+| **Task Types** | Sentiment Analysis, NER, Relation Extraction |
+| **Troubleshooting** | Overfitting, Class Imbalance, Low Accuracy |
 
-## 環境需求
+## Requirements
 
-### 遠端伺服器（訓練用）
-- GPU: NVIDIA GPU（建議 24GB+ VRAM）
+### Remote Server (Training)
+- GPU: NVIDIA GPU (24GB+ VRAM recommended)
 - Python: 3.10+
 
-### 本地開發
-- Python: `uv run python`
-- Claude Code: 最新版本
+### Local Development
+- Claude Code: Latest version
 
-## 版本歷史
+## Development
 
-見 [CHANGELOG.md](skills/finetune-llm/CHANGELOG.md)
+### Local Testing
 
-## 授權
+```bash
+claude --plugin-dir .
+claude --debug --plugin-dir .
+```
+
+### Validation
+
+```bash
+./scripts/validate-plugin.sh
+```
+
+## CI/CD
+
+- **GitHub Actions**: Auto-validates on push/PR
+- **GitLab CI**: Auto-validates on push/MR
+
+## Version History
+
+See [CHANGELOG.md](skills/finetune-llm/CHANGELOG.md)
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## License
 
 MIT License
 
-## 作者
+## Author
 
 Weifan Liao (weifanliao@eland.com.tw)
