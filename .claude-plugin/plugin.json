@@ -1,7 +1,7 @@
 {
   "name": "nlp-skills",
-  "description": "NLP Skills Marketplace - LLM fine-tuning 工作流程與工具集",
-  "version": "2.0.0",
+  "description": "NLP Skills Marketplace - LLM fine-tuning 教練式引導工作流程",
+  "version": "3.0.0",
   "author": {
     "name": "Weifan Liao",
     "email": "weifanliao@eland.com.tw"
@@ -19,6 +19,13 @@
     "qwen",
     "chinese-nlp",
     "sentiment-analysis",
-    "ner"
-  ]
+    "ner",
+    "coaching",
+    "multi-task",
+    "data-pipeline"
+  ],
+  "skills": "./skills/finetune-llm/skills",
+  "commands": "./skills/finetune-llm/commands",
+  "agents": "./skills/finetune-llm/agents",
+  "hooks": "./skills/finetune-llm/hooks/hooks.json"
 }

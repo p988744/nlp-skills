@@ -1,0 +1,44 @@
+{
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": {
+        "toolName": "Write",
+        "pathPattern": "**/data_source.yaml"
+      },
+      "type": "prompt",
+      "prompt": "A data_source.yaml file was just written or updated. Please verify:\n\n1. All required fields are present for each source type\n2. Sensitive information uses environment variables (${VAR_NAME})\n3. Output paths are correctly configured\n4. Regeneration script path is set\n\nIf any issues found, notify the user. Otherwise, confirm the configuration is valid and remind them to:\n- Set required environment variables\n- Run the regeneration script when ready",
+      "stopAfterMatch": false
+    },
+    {
+      "event": "PostToolUse",
+      "matcher": {
+        "toolName": "Write",
+        "pathPattern": "**/versions/*/lineage.yaml"
+      },
+      "type": "prompt",
+      "prompt": "A version lineage file was just created or updated. Please verify:\n\n1. Version number is correctly formatted\n2. Parent version is set (if not v1)\n3. All required sections are present (data, config, results, changes)\n4. Timestamps are in ISO format\n\nIf this is after training completion, suggest:\n- Running evaluation if not done\n- Comparing with previous version if available\n- Checking if success criteria are met",
+      "stopAfterMatch": false
+    },
+    {
+      "event": "PostToolUse",
+      "matcher": {
+        "toolName": "Bash",
+        "commandPattern": ".*train\\.py.*"
+      },
+      "type": "prompt",
+      "prompt": "A training script was just executed. After training completes:\n\n1. Check if training was successful (no errors in output)\n2. Suggest running evaluation: python scripts/05_evaluate.py\n3. Remind user to update version lineage with training results\n4. If errors occurred, offer to diagnose using problem-diagnoser agent",
+      "stopAfterMatch": false
+    },
+    {
+      "event": "PostToolUse",
+      "matcher": {
+        "toolName": "Bash",
+        "commandPattern": ".*evaluate\\.py.*"
+      },
+      "type": "prompt",
+      "prompt": "An evaluation script was just executed. After evaluation completes:\n\n1. Read the evaluation results\n2. Compare against success criteria in task.yaml\n3. If met: Congratulate and suggest deployment\n4. If not met: Offer to launch problem-diagnoser agent for improvement recommendations\n5. If previous version exists, offer version comparison",
+      "stopAfterMatch": false
+    }
+  ]
+}

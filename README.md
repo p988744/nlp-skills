@@ -1,12 +1,13 @@
 # NLP Skills Marketplace
 
-Claude Code skills for NLP tasks - LLM fine-tuning 工作流程與工具集。
+Claude Code skills for NLP tasks - LLM fine-tuning 教練式引導工作流程。
 
-## 可用 Skills
+## v3.0 新特色
 
-| Skill | 說明 |
-|-------|------|
-| `finetune-llm` | LLM fine-tuning 完整工作流程 |
+- **教練式引導**：主動探索痛點，引導明確目標，推薦最佳方案
+- **多任務管理**：支援多個訓練任務的版本追蹤和比較
+- **資料來源追蹤**：可重現的資料管線（DB、API、爬取、LLM 生成）
+- **智能 Agents**：自動診斷問題、分析結果、推薦改善
 
 ## 安裝方式
 
@@ -16,8 +17,8 @@ Claude Code skills for NLP tasks - LLM fine-tuning 工作流程與工具集。
 # 添加 nlp-skills marketplace
 /plugin marketplace add p988744/nlp-skills
 
-# 安裝 skill
-/plugin install finetune-llm@nlp-skills
+# 安裝
+/plugin install nlp-skills
 ```
 
 ### 方法 2：直接指定目錄
@@ -26,103 +27,131 @@ Claude Code skills for NLP tasks - LLM fine-tuning 工作流程與工具集。
 claude --plugin-dir /path/to/nlp-skills
 ```
 
-## finetune-llm Skill
+## 組件架構
 
-LLM fine-tuning 完整工作流程，自動生成可重現的訓練專案。
+### Skills (4 個專精領域)
 
-### 功能特色
+| Skill | 觸發詞 | 說明 |
+|-------|--------|------|
+| **llm-coach** | 「訓練模型」「fine-tune」「優化效能」 | 教練式引導主入口 |
+| **llm-knowledge** | 「什麼是 LoRA」「模型比較」 | 獨立知識庫 |
+| **task-manager** | 「列出任務」「版本比較」 | 多任務管理 |
+| **data-pipeline** | 「資料來源」「資料從哪裡來」 | 資料管線配置 |
 
-- **雙模式支援**：Create（建立新任務）、Iterate（改善既有任務）
-- **自動專案生成**：根據任務定義生成完整腳本、配置、文件
-- **內建知識庫**：2025-2026 最新模型、方法、任務指南（減少上網搜尋）
-- **多種訓練方法**：SFT、LoRA、QLoRA、DoRA、ORPO、DPO
-- **Benchmark 評估**：RGL 指標（Reliability, Generality, Locality）
-- **HuggingFace 部署**：Adapter、GGUF、vLLM 多格式支援
+### Commands (7 個快捷指令)
 
-### 使用方式
+| 指令 | 說明 |
+|------|------|
+| `/nlp-skills:coach` | 啟動教練式對話 |
+| `/nlp-skills:tasks` | 列出所有任務狀態 |
+| `/nlp-skills:new-task` | 建立新任務 |
+| `/nlp-skills:data-source` | 配置資料來源 |
+| `/nlp-skills:generate` | 生成專案結構 |
+| `/nlp-skills:evaluate` | 執行評估分析 |
+| `/nlp-skills:deploy` | 部署模型 |
 
-```
-/finetune-llm
-```
+### Agents (4 個自主助手)
 
-或直接描述你的需求：
+| Agent | 觸發時機 | 功能 |
+|-------|----------|------|
+| **goal-clarifier** | 模糊需求 | 主動引導釐清目標 |
+| **data-source-advisor** | 詢問資料來源 | 協助配置資料管線 |
+| **problem-diagnoser** | 效能問題 | 自動診斷推薦改善 |
+| **result-analyzer** | 訓練/評估後 | 分析結果決策建議 |
 
-```
-# 建立新任務
-我想訓練一個情感分析模型
-幫我 fine-tune 一個 NER 模型
+## 使用方式
 
-# 改善既有任務
-改善 sentiment 模型的準確率
-stance 的 F1 太低，怎麼辦
-```
-
-### 工作流程
-
-```
-Phase 1          Phase 2          Phase 3          Phase 4          Phase 5          Phase 6
-定義目標    →    生成專案    →    準備資料    →    訓練模型    →    評估效能    →    部署上線
-   │               │               │               │               │               │
-   ▼               ▼               ▼               ▼               ▼               ▼
-task_def.yaml   tasks/目錄     data/*.jsonl    models/        results/       HuggingFace
-```
-
-### 專案產出結構
-
-每個任務生成獨立可重現的資料夾：
+### 快速開始
 
 ```
-tasks/{task_name}/
-├── README.md                 # 快速開始
-├── task_definition.yaml      # 任務定義
-├── scripts/                  # 可執行腳本
-│   ├── 01_validate_data.py
-│   ├── 02_convert_format.py
-│   ├── 03_train.py
-│   ├── 04_evaluate.py
-│   ├── 05_upload_hf.py
-│   └── run_pipeline.sh       # 一鍵執行
-├── configs/                  # 訓練配置
-├── data/                     # 訓練資料
-├── models/                   # 模型產出
-├── benchmarks/               # 評估結果
-├── docs/                     # 整合指南
-└── hf_cards/                 # HuggingFace Model Cards
+# 教練引導
+我想訓練一個模型
+
+# 直接建立
+/nlp-skills:new-task entity-sentiment
+
+# 列出任務
+/nlp-skills:tasks
 ```
 
-### 內建知識庫
+### 完整流程
+
+```
+1. 啟動教練引導          → 釐清目標、痛點、資源
+2. 配置資料來源          → 設定 DB、API、爬取、LLM 生成
+3. 生成專案              → 產生腳本、配置、文件
+4. 準備資料              → 執行資料生成腳本
+5. 訓練模型              → 執行訓練腳本
+6. 評估效能              → 分析結果、版本比較
+7. 部署上線              → HuggingFace、Ollama
+```
+
+## 專案結構
+
+每個任務是完全獨立的自包含專案：
+
+```
+{任務名稱}/
+├── task.yaml               # 任務定義
+├── data_source.yaml        # 資料來源配置（可重現）
+├── versions/               # 版本追蹤（完整 lineage）
+│   ├── v1/
+│   │   ├── config.yaml
+│   │   ├── data_snapshot.json
+│   │   ├── results.json
+│   │   └── lineage.yaml
+│   └── v2/
+├── data/
+├── scripts/
+├── configs/
+├── models/
+└── benchmarks/
+```
+
+## 資料來源配置
+
+v3 的核心特色是可重現的資料管線：
+
+```yaml
+# data_source.yaml
+sources:
+  - type: database
+    connection: postgresql://...
+    query: "SELECT text, label FROM annotations"
+
+  - type: api
+    endpoint: https://api.example.com/data
+
+  - type: web_scrape
+    urls: ["https://..."]
+    keywords: ["金融", "股票"]
+
+  - type: llm_generated
+    model: gpt-4o
+    count: 500
+```
+
+## 內建知識庫
 
 減少上網搜尋，內建 2025-2026 最新知識：
 
 | 類別 | 內容 |
 |------|------|
-| **模型架構** | Dense vs MoE、MLA、DeepSeek 創新 |
+| **模型架構** | Dense vs MoE、MLA |
 | **基礎模型** | Qwen3、DeepSeek-V3/R1、Llama 3.3 |
-| **訓練方法** | SFT、LoRA、QLoRA、DoRA、ORPO、DPO |
-| **任務類型** | 情感分析、NER、關係抽取、風格轉換 |
+| **訓練方法** | SFT、LoRA、QLoRA、ORPO、DPO |
+| **任務類型** | 情感分析、NER、關係抽取 |
 | **問題排解** | 過擬合、類別不平衡、準確率低 |
 
-### 環境需求
+## 環境需求
 
-#### 遠端伺服器（訓練用）
+### 遠端伺服器（訓練用）
 - GPU: NVIDIA GPU（建議 24GB+ VRAM）
 - Python: 3.10+
-- 設定方式：skill 會在首次使用時詢問伺服器資訊
 
-#### 本地開發
+### 本地開發
 - Python: `uv run python`
 - Claude Code: 最新版本
-
-### 支援的任務類型
-
-| 任務 | 訓練方法 | 說明 |
-|------|----------|------|
-| 情感分析 | SFT | 正面/負面/中立分類 |
-| 實體情感 | SFT | 針對特定實體的情感 |
-| 立場分析 | SFT | 支持/反對/中立 |
-| 公文轉換 | ORPO | 口語→公文格式 |
-| NER | SFT | 命名實體識別 |
-| 關係抽取 | SFT | 實體間關係 |
 
 ## 版本歷史
 
