@@ -13,7 +13,6 @@
 | SFT 還是 ORPO？ | [methods/INDEX.md](methods/INDEX.md) |
 | LoRA 怎麼配置？ | [methods/peft/lora.md](methods/peft/lora.md) |
 | 情感分析最佳實踐？ | [tasks/classification/sentiment-analysis.md](tasks/classification/sentiment-analysis.md) |
-| 中文資料集有哪些？ | [datasets/INDEX.md](datasets/INDEX.md) |
 | 準確率太低怎麼辦？ | [troubleshooting/low-accuracy.md](troubleshooting/low-accuracy.md) |
 
 ---
@@ -47,19 +46,13 @@
 
 ```
 methods/
-├── pretraining/          # 預訓練
-│   └── continual-pretraining.md
 ├── finetuning/           # 微調
-│   ├── sft.md            # Supervised Fine-Tuning ⭐
-│   └── instruction-tuning.md
+│   └── sft.md            # Supervised Fine-Tuning ⭐
 ├── peft/                 # 參數高效微調
-│   ├── lora.md           # LoRA ⭐
-│   ├── qlora.md          # QLoRA（量化）⭐
-│   └── dora.md           # DoRA
+│   └── lora.md           # LoRA ⭐
 └── alignment/            # 對齊方法
     ├── dpo.md            # Direct Preference Optimization ⭐
-    ├── orpo.md           # ORPO（無需參考模型）⭐
-    └── kto.md            # KTO
+    └── orpo.md           # ORPO（無需參考模型）⭐
 ```
 
 ### [tasks/](tasks/INDEX.md) NLP 任務類型
@@ -69,60 +62,10 @@ methods/
 ```
 tasks/
 ├── classification/       # 分類任務
-│   ├── sentiment-analysis.md    # 情感分析 ⭐
-│   ├── text-classification.md   # 文本分類 ⭐
-│   └── stance-detection.md      # 立場分析
-├── extraction/           # 抽取任務
-│   ├── named-entity-recognition.md  # NER ⭐
-│   └── relation-extraction.md
-├── generation/           # 生成任務
-│   ├── text-generation.md
-│   └── summarization.md
-└── understanding/        # 理解任務
-    └── question-answering.md
+│   └── sentiment-analysis.md    # 情感分析 ⭐
+└── extraction/           # 抽取任務
+    └── ner.md            # NER ⭐
 ```
-
-### [datasets/](datasets/INDEX.md) 資料來源
-
-可用的訓練資料集。
-
-```
-datasets/
-├── chinese/              # 中文資料集
-│   ├── sentiment.md      # 情感分析資料集
-│   ├── ner.md            # NER 資料集
-│   └── instruction.md    # 指令資料集
-└── english/              # 英文資料集
-```
-
-### [domains/](domains/INDEX.md) 領域知識
-
-特定領域的專業知識。
-
-| 領域 | 文件 |
-|------|------|
-| 金融 | [finance-chinese.md](domains/finance-chinese.md) |
-| 法律 | [legal-chinese.md](domains/legal-chinese.md) |
-| 政府公文 | [government-chinese.md](domains/government-chinese.md) |
-
-### [evaluation/](evaluation/INDEX.md) 評估方法
-
-評估指標和方法。
-
-| 任務類型 | 指標 |
-|----------|------|
-| 分類 | [classification-metrics.md](evaluation/classification-metrics.md) |
-| 生成 | [generation-metrics.md](evaluation/generation-metrics.md) |
-
-### [deployment/](deployment/INDEX.md) 部署方式
-
-模型部署和量化。
-
-| 部署方式 | 適用場景 |
-|----------|----------|
-| [Ollama](deployment/ollama.md) | 本地開發、邊緣 |
-| [vLLM](deployment/vllm.md) | GPU 生產環境 |
-| [量化](deployment/quantization.md) | GGUF, AWQ |
 
 ### [troubleshooting/](troubleshooting/INDEX.md) 問題排解
 

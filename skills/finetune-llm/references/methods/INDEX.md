@@ -41,27 +41,15 @@
 
 ```
 methods/
-├── pretraining/              # 預訓練（較少使用）
-│   ├── continual-pretraining.md
-│   └── domain-adaptive.md
-│
 ├── finetuning/               # 微調方法
-│   ├── sft.md                # ⭐ 最常用
-│   ├── full-finetuning.md
-│   └── instruction-tuning.md
+│   └── sft.md                # ⭐ 最常用
 │
 ├── peft/                     # 參數高效微調
-│   ├── lora.md               # ⭐ 推薦入門
-│   ├── qlora.md              # ⭐ 資源受限首選
-│   ├── dora.md               # 追求品質
-│   └── adalora.md
+│   └── lora.md               # ⭐ 推薦入門
 │
 └── alignment/                # 對齊方法
     ├── dpo.md                # ⭐ 穩定
-    ├── orpo.md               # ⭐ 簡單（無需參考模型）
-    ├── kto.md                # 非配對資料
-    ├── simpo.md
-    └── grpo.md               # DeepSeek 使用
+    └── orpo.md               # ⭐ 簡單（無需參考模型）
 ```
 
 ## 推薦組合
@@ -91,7 +79,6 @@ peft: lora
 
 - [finetuning/sft.md](finetuning/sft.md) - SFT 詳細指南
 - [peft/lora.md](peft/lora.md) - LoRA 配置和技巧
-- [peft/qlora.md](peft/qlora.md) - QLoRA 資源受限方案
 - [alignment/orpo.md](alignment/orpo.md) - ORPO 偏好對齊
 - [alignment/dpo.md](alignment/dpo.md) - DPO 偏好對齊
 

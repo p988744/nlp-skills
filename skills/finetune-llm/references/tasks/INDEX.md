@@ -5,28 +5,10 @@
 ```
 tasks/
 ├── classification/          # 分類任務
-│   ├── sentiment-analysis   # 情感分析
-│   ├── topic-classification # 主題分類
-│   └── intent-detection     # 意圖識別
+│   └── sentiment-analysis   # 情感分析
 │
-├── extraction/              # 抽取任務
-│   ├── ner                  # 命名實體識別
-│   ├── relation-extraction  # 關係抽取
-│   └── event-extraction     # 事件抽取
-│
-├── generation/              # 生成任務
-│   ├── summarization        # 摘要
-│   ├── style-transfer       # 風格轉換
-│   └── document-formatting  # 文件格式化
-│
-├── understanding/           # 理解任務
-│   ├── reading-comprehension # 閱讀理解
-│   ├── qa                   # 問答
-│   └── stance-detection     # 立場分析
-│
-└── dialogue/                # 對話任務
-    ├── chatbot              # 聊天機器人
-    └── task-oriented        # 任務型對話
+└── extraction/              # 抽取任務
+    └── ner                  # 命名實體識別
 ```
 
 ## 快速選擇
@@ -43,20 +25,9 @@ tasks/
 
 ### 分類任務
 - [classification/sentiment-analysis.md](classification/sentiment-analysis.md) - 情感分析
-- [classification/topic.md](classification/topic.md) - 主題分類
-- [classification/intent.md](classification/intent.md) - 意圖識別
 
 ### 抽取任務
 - [extraction/ner.md](extraction/ner.md) - 命名實體識別
-- [extraction/relation.md](extraction/relation.md) - 關係抽取
-- [extraction/event.md](extraction/event.md) - 事件抽取
-
-### 生成任務
-- [generation/style-transfer.md](generation/style-transfer.md) - 風格轉換
-- [generation/document-formatting.md](generation/document-formatting.md) - 文件格式化
-
-### 理解任務
-- [understanding/stance-detection.md](understanding/stance-detection.md) - 立場分析
 
 ## 任務特點
 

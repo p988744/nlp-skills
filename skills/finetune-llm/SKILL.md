@@ -83,8 +83,7 @@ tasks/{task_name}/
 - [模型架構](references/architectures/INDEX.md) - Dense, MoE, MLA
 - [基礎模型](references/models/INDEX.md) - Qwen, Llama, DeepSeek
 - [訓練方法](references/methods/INDEX.md) - SFT, LoRA, ORPO, DPO
-- [任務類型](references/tasks/INDEX.md) - 分類、抽取、生成
-- [中文資料集](references/datasets/INDEX.md) - 情感、NER、指令
+- [任務類型](references/tasks/INDEX.md) - 分類、抽取
 - [問題排解](references/troubleshooting/INDEX.md) - 過擬合、類別不平衡
 
 詳見 [references/INDEX.md](references/INDEX.md)
