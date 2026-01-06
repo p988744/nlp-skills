@@ -14,7 +14,7 @@ Claude Code skills for NLP tasks - LLM fine-tuning 工作流程與工具集。
 
 ```bash
 # 添加 nlp-skills marketplace
-/plugin marketplace add https://github.com/p988744/nlp-skills.git
+/plugin marketplace add p988744/nlp-skills
 
 # 安裝 skill
 /plugin install finetune-llm@nlp-skills
