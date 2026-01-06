@@ -25,7 +25,7 @@
     "data-pipeline"
   ],
   "skills": "./skills/finetune-llm/skills",
-  "commands": "./skills/finetune-llm/commands",
-  "agents": "./skills/finetune-llm/agents",
+  "commands": "./skills/finetune-llm/commands/*.md",
+  "agents": "./skills/finetune-llm/agents/*.md",
   "hooks": "./skills/finetune-llm/hooks/hooks.json"
 }
