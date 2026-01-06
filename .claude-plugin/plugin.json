@@ -25,7 +25,20 @@
     "data-pipeline"
   ],
   "skills": "./skills",
-  "commands": "./commands",
-  "agents": "./agents",
+  "commands": [
+    "./commands/coach.md",
+    "./commands/tasks.md",
+    "./commands/new-task.md",
+    "./commands/data-source.md",
+    "./commands/generate.md",
+    "./commands/evaluate.md",
+    "./commands/deploy.md"
+  ],
+  "agents": [
+    "./agents/goal-clarifier.md",
+    "./agents/data-source-advisor.md",
+    "./agents/problem-diagnoser.md",
+    "./agents/result-analyzer.md"
+  ],
   "hooks": "./hooks/hooks.json"
 }
