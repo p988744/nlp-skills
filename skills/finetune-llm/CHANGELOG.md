@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
-## [3.0.0] - 2026-01-06
+## [0.3.0] - 2026-01-06
 
 ### Added
 - **教練式引導設計**：從前期激勵到決策支援的完整教練體驗
@@ -50,14 +50,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
-## [2.0.1] - 2026-01-06
+## [0.2.1] - 2026-01-06
 
 ### Added
 - **Slash Command**: 新增 `/finetune-llm` 命令，支援 `create` 和 `iterate` 參數
 
 ---
 
-## [2.0.0] - 2026-01-06
+## [0.2.0] - 2026-01-06
 
 ### Added
 - **雙模式支援**: Create (建立新任務) 和 Iterate (改善既有任務)
@@ -81,7 +81,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
-## [1.0.0] - 2026-01-05
+## [0.1.0] - 2026-01-05
 
 ### Added
 - 初始版本

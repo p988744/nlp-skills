@@ -11,7 +11,7 @@
       "name": "nlp-skills",
       "source": "./",
       "description": "LLM fine-tuning 教練式引導工作流程。支援多任務管理、資料來源追蹤、智能 Agents 自動診斷。",
-      "version": "3.0.0",
+      "version": "0.3.0",
       "author": {
         "name": "Weifan Liao"
       },

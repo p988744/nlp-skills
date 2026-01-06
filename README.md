@@ -2,7 +2,7 @@
 
 Claude Code skills for NLP tasks - LLM fine-tuning 教練式引導工作流程。
 
-## v3.0 新特色
+## v0.3 新特色
 
 - **教練式引導**：主動探索痛點，引導明確目標，推薦最佳方案
 - **多任務管理**：支援多個訓練任務的版本追蹤和比較
@@ -110,7 +110,7 @@ claude --plugin-dir /path/to/nlp-skills
 
 ## 資料來源配置
 
-v3 的核心特色是可重現的資料管線：
+v0.3 的核心特色是可重現的資料管線：
 
 ```yaml
 # data_source.yaml
