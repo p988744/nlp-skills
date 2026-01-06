@@ -1,17 +1,17 @@
 {
   "$schema": "https://cdn.jsdelivr.net/gh/anthropics/claude-code@main/plugins/marketplace.schema.json",
   "name": "nlp-skills",
-  "description": "NLP Skills Marketplace - LLM fine-tuning 工作流程與工具集",
+  "description": "NLP Skills Marketplace - LLM fine-tuning 教練式引導工作流程",
   "owner": {
     "name": "Weifan Liao",
     "email": "weifanliao@eland.com.tw"
   },
   "plugins": [
     {
-      "name": "finetune-llm",
-      "source": "./skills/finetune-llm",
-      "description": "LLM fine-tuning 完整工作流程。自動生成可重現專案、內建知識庫、支援 Create/Iterate 雙模式。",
-      "version": "2.0.0",
+      "name": "nlp-skills",
+      "source": ".",
+      "description": "LLM fine-tuning 教練式引導工作流程。支援多任務管理、資料來源追蹤、智能 Agents 自動診斷。",
+      "version": "3.0.0",
       "author": {
         "name": "Weifan Liao"
       },
@@ -27,7 +27,10 @@
         "huggingface",
         "chinese-nlp",
         "qwen",
-        "sentiment-analysis"
+        "sentiment-analysis",
+        "coaching",
+        "multi-task",
+        "data-pipeline"
       ]
     }
   ]
