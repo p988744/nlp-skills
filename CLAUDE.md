@@ -1,113 +1,172 @@
-# NLP Skills Marketplace - Claude Code 專案指引
+# NLP Skills Marketplace - Claude Code Project Guide
 
-## 專案概述
+## Project Overview
 
-Claude Code skill marketplace，提供 NLP 相關工作流程。
+Claude Code plugin for NLP tasks - LLM fine-tuning coaching-style workflow.
 
-- **Repository**: https://github.com/p988744/nlp-skills
-- **當前版本**: 2.0.0
+- **Version**: 0.3.0
+- **GitHub**: https://github.com/p988744/nlp-skills
+- **GitLab**: https://gitting.eland.com.tw/rd2/claude-skills/nlp-skills
 
-## 專案結構
+## Git Remotes
+
+```bash
+origin  https://github.com/p988744/nlp-skills.git
+gitlab  https://gitting.eland.com.tw/rd2/claude-skills/nlp-skills.git
+```
+
+Push to both:
+```bash
+git push origin main --tags && git push gitlab main --tags
+```
+
+## Project Structure
 
 ```
 nlp-skills/
 ├── .claude-plugin/
-│   ├── plugin.json         # Plugin 配置（含版本號）
-│   └── marketplace.json    # Marketplace 配置
-├── skills/
-│   └── finetune-llm/       # LLM Fine-tuning Skill
-│       ├── SKILL.md        # Skill 入口
-│       ├── CHANGELOG.md    # 版本歷史
-│       ├── CHECKLIST.md    # 檢查清單
-│       ├── CREATE-MODE.md  # 建立新任務流程
-│       ├── ITERATE-MODE.md # 改善既有任務流程
-│       ├── phases/         # 6 階段詳細文件
-│       ├── references/     # 知識庫
-│       ├── scripts/        # 專案生成腳本
-│       └── templates/      # Jinja2 模板
-├── README.md               # Marketplace 說明
-└── CLAUDE.md               # 本文件
+│   ├── plugin.json          # Plugin manifest (version here)
+│   └── marketplace.json     # Marketplace config (version here)
+├── commands/                # 7 slash commands
+│   ├── coach.md
+│   ├── tasks.md
+│   ├── new-task.md
+│   ├── data-source.md
+│   ├── generate.md
+│   ├── evaluate.md
+│   └── deploy.md
+├── agents/                  # 4 intelligent agents
+│   ├── goal-clarifier.md
+│   ├── data-source-advisor.md
+│   ├── problem-diagnoser.md
+│   └── result-analyzer.md
+├── skills/                  # 5 specialized skills
+│   ├── llm-coach/
+│   ├── llm-knowledge/
+│   ├── task-manager/
+│   ├── data-pipeline/
+│   └── finetune-llm/
+├── hooks/
+│   └── hooks.json           # 4 event hooks
+├── README.md
+├── CONTRIBUTING.md
+└── CLAUDE.md
 ```
 
-## 可用 Skills
+## Components
 
-| Skill | 說明 |
-|-------|------|
-| `finetune-llm` | LLM fine-tuning 完整工作流程 |
+### Commands (7)
+| Command | Description |
+|---------|-------------|
+| `/nlp-skills:coach` | Start coaching dialogue |
+| `/nlp-skills:tasks` | List all tasks |
+| `/nlp-skills:new-task` | Create new task |
+| `/nlp-skills:data-source` | Configure data sources |
+| `/nlp-skills:generate` | Generate project structure |
+| `/nlp-skills:evaluate` | Run evaluation |
+| `/nlp-skills:deploy` | Deploy model |
 
-## 版本控制
+### Agents (4)
+| Agent | Trigger |
+|-------|---------|
+| `goal-clarifier` | Vague training requests |
+| `data-source-advisor` | Data source questions |
+| `problem-diagnoser` | Performance issues |
+| `result-analyzer` | Post-training analysis |
 
-### 版本號位置
+### Skills (5)
+| Skill | Purpose |
+|-------|---------|
+| `llm-coach` | Coaching guidance entry point |
+| `llm-knowledge` | Knowledge base |
+| `task-manager` | Multi-task management |
+| `data-pipeline` | Data source configuration |
+| `finetune-llm` | Overview skill |
 
-更新版本時需修改以下檔案：
+## Version Control
 
-| 檔案 | 欄位 |
-|------|------|
+### Version Locations
+
+Update these files when releasing:
+
+| File | Field |
+|------|-------|
 | `.claude-plugin/plugin.json` | `version` |
-| `.claude-plugin/marketplace.json` | `metadata.version` |
 | `.claude-plugin/marketplace.json` | `plugins[0].version` |
-| `skills/finetune-llm/CHANGELOG.md` | 新增版本記錄 |
+| `skills/finetune-llm/CHANGELOG.md` | Add version entry |
 
-### 發布流程
+### Release Process
 
 ```bash
-# 1. 修改 skill 檔案
+# 1. Update version in plugin.json, marketplace.json
 
-# 2. 更新 CHANGELOG.md
-# 記錄 Added/Changed/Removed/Fixed
+# 2. Update CHANGELOG.md
 
-# 3. 更新版本號（plugin.json, marketplace.json）
-
-# 4. Commit
+# 3. Commit
 git add -A
-git commit -m "release: vX.Y.Z
+git commit -m "release: vX.Y.Z - Description"
 
-- 變更摘要
+# 4. Create tag (English release notes)
+git tag -a vX.Y.Z -m "Release vX.Y.Z
+
+## New Features
+- Feature 1
+- Feature 2
 "
 
-# 5. 建立 tag
-git tag -a vX.Y.Z -m "Release vX.Y.Z"
-
-# 6. 推送
+# 5. Push to both remotes
 git push origin main --tags
+git push gitlab main --tags
 ```
 
-### 版本命名規則
+### Version Naming
 
-遵循 Semantic Versioning：
+Semantic Versioning (currently 0.x.x - early development):
 
-- **MAJOR** (X.0.0): 架構重大變更、不相容更新
-- **MINOR** (0.X.0): 新增功能、向後相容
-- **PATCH** (0.0.X): Bug 修復、文件更新
+- **MAJOR** (X.0.0): Breaking changes
+- **MINOR** (0.X.0): New features
+- **PATCH** (0.0.X): Bug fixes
 
-## 開發指引
+## Development
 
-### 新增 Skill
+### Local Testing
 
-1. 在 `skills/` 建立新目錄
-2. 建立 `SKILL.md` 作為入口
-3. 更新 `.claude-plugin/marketplace.json` 的 `plugins` 陣列
-4. 更新 `README.md` 的可用 Skills 列表
+```bash
+# Test plugin locally
+claude --plugin-dir .
 
-### 新增 Reference（finetune-llm）
+# Debug mode
+claude --debug --plugin-dir .
 
-1. 在 `skills/finetune-llm/references/` 對應目錄新增 `.md` 檔案
-2. 更新該目錄的 `INDEX.md`
-3. 必要時更新 `references/INDEX.md`
+# Validate structure
+claude plugin validate .
+```
 
-### 新增 Template（finetune-llm）
+### Adding Components
 
-1. 在 `skills/finetune-llm/templates/` 對應目錄新增 `.j2` 檔案
-2. 更新 `templates/INDEX.md`
-3. 更新 `scripts/init_project.py` 的渲染邏輯
+**Command**: Create `commands/name.md` with frontmatter (description, allowed-tools, model)
 
-## Git 分支策略
+**Agent**: Create `agents/name.md` with frontmatter (name, description, tools, model)
 
-- `main`: 穩定版本，直接推送或 PR
-- `feature/*`: 功能開發分支
-- `fix/*`: Bug 修復分支
+**Skill**: Create `skills/name/SKILL.md` with frontmatter (name, description, allowed-tools)
 
-## 相關資源
+**Hook**: Edit `hooks/hooks.json`
 
-- [Claude Code 文件](https://docs.anthropic.com/en/docs/claude-code)
-- HuggingFace Models: 依 `task_definition.yaml` 中的 `huggingface.org` 設定
+After adding, update `plugin.json` arrays for commands/agents.
+
+### plugin.json Format
+
+Commands and agents must use explicit file paths:
+```json
+{
+  "commands": ["./commands/file1.md", "./commands/file2.md"],
+  "agents": ["./agents/file1.md", "./agents/file2.md"],
+  "skills": "./skills",
+  "hooks": "./hooks/hooks.json"
+}
+```
+
+## Resources
+
+- [Claude Code Docs](https://docs.anthropic.com/en/docs/claude-code)
+- [CONTRIBUTING.md](./CONTRIBUTING.md) - Contribution guide
