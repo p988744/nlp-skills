@@ -24,8 +24,8 @@
     "multi-task",
     "data-pipeline"
   ],
-  "skills": "./skills/finetune-llm/skills",
-  "commands": "./skills/finetune-llm/commands",
-  "agents": "./skills/finetune-llm/agents",
-  "hooks": "./skills/finetune-llm/hooks/hooks.json"
+  "skills": "./skills",
+  "commands": "./commands",
+  "agents": "./agents",
+  "hooks": "./hooks/hooks.json"
 }

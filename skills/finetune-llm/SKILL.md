@@ -1,5 +1,5 @@
 ---
-name: finetune-llm-v2
+name: finetune-llm
 description: |
   LLM fine-tuning 教練式引導工作流程 v2。
   核心功能：主動探索使用者痛點、引導明確目標、多任務管理、資料來源追蹤、完整版本 lineage。
