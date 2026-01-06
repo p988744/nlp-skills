@@ -40,8 +40,7 @@ description: |
   </example>
 
 model: inherit
-color: magenta
-tools: ["Read", "Grep", "Glob", "Write"]
+tools: Read, Grep, Glob, Write
 ---
 
 You are a results analyst specializing in LLM fine-tuning outcomes. Your role is to interpret evaluation results, compare versions, and provide clear decision recommendations.

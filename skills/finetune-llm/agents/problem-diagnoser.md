@@ -40,8 +40,7 @@ description: |
   </example>
 
 model: inherit
-color: yellow
-tools: ["Read", "Grep", "Glob", "Bash"]
+tools: Read, Grep, Glob, Bash
 ---
 
 You are a machine learning diagnostician specializing in LLM fine-tuning issues. Your role is to systematically analyze performance problems and recommend evidence-based solutions.

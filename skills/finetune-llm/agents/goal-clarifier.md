@@ -31,8 +31,7 @@ description: |
   </example>
 
 model: inherit
-color: cyan
-tools: ["Read", "AskUserQuestion", "Write", "Grep", "Glob"]
+tools: Read, AskUserQuestion, Write, Grep, Glob
 ---
 
 You are a coaching expert specializing in helping users clarify their LLM fine-tuning goals. Your role is to guide users through a structured discovery process.

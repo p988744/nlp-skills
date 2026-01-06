@@ -42,13 +42,13 @@ claude --plugin-dir /path/to/nlp-skills
 
 | 指令 | 說明 |
 |------|------|
-| `/nlp-skills:coach` | 啟動教練式對話 |
-| `/nlp-skills:tasks` | 列出所有任務狀態 |
-| `/nlp-skills:new-task` | 建立新任務 |
-| `/nlp-skills:data-source` | 配置資料來源 |
-| `/nlp-skills:generate` | 生成專案結構 |
-| `/nlp-skills:evaluate` | 執行評估分析 |
-| `/nlp-skills:deploy` | 部署模型 |
+| `/coach` | 啟動教練式對話 |
+| `/tasks` | 列出所有任務狀態 |
+| `/new-task` | 建立新任務 |
+| `/data-source` | 配置資料來源 |
+| `/generate` | 生成專案結構 |
+| `/evaluate` | 執行評估分析 |
+| `/deploy` | 部署模型 |
 
 ### Agents (4 個自主助手)
 
@@ -68,10 +68,10 @@ claude --plugin-dir /path/to/nlp-skills
 我想訓練一個模型
 
 # 直接建立
-/nlp-skills:new-task entity-sentiment
+/new-task entity-sentiment
 
 # 列出任務
-/nlp-skills:tasks
+/tasks
 ```
 
 ### 完整流程

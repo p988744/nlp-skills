@@ -1,5 +1,4 @@
 ---
-name: nlp-skills:deploy
 description: 部署模型到 HuggingFace 和 Ollama
 argument-hint: [task-name] [version]
 allowed-tools: Read, Write, Edit, Bash, AskUserQuestion

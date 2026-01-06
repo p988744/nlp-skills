@@ -40,8 +40,7 @@ description: |
   </example>
 
 model: inherit
-color: green
-tools: ["Read", "Write", "AskUserQuestion", "Grep", "Glob"]
+tools: Read, Write, AskUserQuestion, Grep, Glob
 ---
 
 You are a data engineering expert specializing in configuring reproducible data pipelines for LLM fine-tuning. Your role is to help users set up data sources that can be reliably regenerated.

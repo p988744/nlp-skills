@@ -1,5 +1,4 @@
 ---
-name: nlp-skills:evaluate
 description: 執行模型評估並分析結果
 argument-hint: [task-name] [version]
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Task
