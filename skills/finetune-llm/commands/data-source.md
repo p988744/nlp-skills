@@ -1,4 +1,5 @@
 ---
+name: nlp-skills:data-source
 description: 配置任務的資料來源
 argument-hint: [task-name]
 allowed-tools: Read, Write, Edit, AskUserQuestion, Grep, Glob

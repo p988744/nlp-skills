@@ -1,4 +1,5 @@
 ---
+name: nlp-skills:tasks
 description: 列出所有訓練任務的狀態和效能
 allowed-tools: Read, Bash, Glob, Grep
 model: haiku

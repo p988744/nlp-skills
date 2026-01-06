@@ -1,4 +1,5 @@
 ---
+name: nlp-skills:new-task
 description: 建立新的 LLM 訓練任務
 argument-hint: [task-name]
 allowed-tools: Read, Write, Edit, Bash, AskUserQuestion

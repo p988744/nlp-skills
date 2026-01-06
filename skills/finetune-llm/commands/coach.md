@@ -1,4 +1,5 @@
 ---
+name: nlp-skills:coach
 description: 啟動教練式對話，引導釐清 LLM 訓練目標和痛點
 allowed-tools: Read, Write, Edit, Grep, Glob, AskUserQuestion, Task
 model: sonnet

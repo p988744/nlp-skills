@@ -1,4 +1,5 @@
 ---
+name: nlp-skills:generate
 description: 生成任務的專案結構和訓練腳本
 argument-hint: [task-name]
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep
