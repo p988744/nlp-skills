@@ -6,6 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [0.3.1] - 2026-01-07
+
+### Added
+- **Model Versioning Strategy**: Added versioning strategy selection to coaching workflow
+  - Semantic versioning (v1, v2, v3) - Recommended for iterative development
+  - Date versioning (2025-01-07) - For API services and scheduled retraining
+  - Hybrid versioning (v2-20250107) - Track both version and timestamp
+- Deployment target recommendations (HuggingFace Hub, Ollama, API)
+- Model artifact naming conventions for each strategy
+- Version retention policy configuration
+- Industry examples (Meta, OpenAI, Anthropic conventions)
+
+### Changed
+- Updated llm-coach skill with versioning exploration in pain point discovery
+- Updated task-manager skill with comprehensive versioning guide
+- English README documentation
+
+---
+
 ## [0.3.0] - 2026-01-06
 
 ### Added

@@ -1,7 +1,7 @@
 {
   "name": "nlp-skills",
   "description": "NLP Skills Marketplace - LLM fine-tuning 教練式引導工作流程",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": {
     "name": "Weifan Liao",
     "email": "weifanliao@eland.com.tw"
