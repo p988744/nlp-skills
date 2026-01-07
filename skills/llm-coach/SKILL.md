@@ -51,6 +51,13 @@ allowed-tools: Bash, Read, Write, Edit, Grep, Glob, Task, AskUserQuestion
 - 有 baseline 可以比較嗎？
 ```
 
+**5. 版本管理策略**
+```
+- 預計會多次迭代嗎？還是一次性訓練？
+- 模型會部署到哪裡？（HuggingFace Hub、本地、API 服務）
+- 需要保留多少個歷史版本？
+```
+
 ### 階段 2: 目標釐清
 
 根據痛點探索結果，整理成結構化目標：
@@ -75,6 +82,11 @@ task_summary:
     primary_metric: macro_f1
     threshold: 0.80
     baseline: rule_based_0.65
+
+  versioning:
+    strategy: semantic       # semantic | date | hybrid
+    deploy_target: huggingface
+    retention: 3            # 保留版本數
 ```
 
 ### 階段 3: 方案推薦
@@ -109,6 +121,45 @@ task_summary:
 | 標準分類/抽取 | SFT + LoRA | 最穩定、最容易 |
 | 有偏好資料 | ORPO | 無需參考模型 |
 | 強調對齊 | DPO | 效果最好 |
+
+**版本管理策略選擇**
+
+| 策略 | 格式範例 | 適用場景 | 建議 |
+|------|----------|----------|------|
+| **Semantic** | `v1`, `v2`, `v3` | 迭代開發、HuggingFace Hub | ✅ 推薦 |
+| **Date** | `2025-01-07`, `2025-01-15` | API 服務、快照備份 | 特定場景 |
+| **Hybrid** | `v2-20250107` | 需要同時追蹤版本和時間 | 進階需求 |
+
+**Semantic 版本（推薦）**
+```
+task-name/versions/
+├── v1/      # 初始版本
+├── v2/      # 參數調整
+├── v2.1/    # 小修改
+└── v3/      # 資料擴增
+```
+- 優點：清晰的演進關係、易於比較、HuggingFace 原生支援
+- 適用：多次迭代的任務
+
+**Date 版本**
+```
+task-name/versions/
+├── 2025-01-07/
+├── 2025-01-15/
+└── 2025-02-01/
+```
+- 優點：時間軸清晰
+- 缺點：無法表達版本關係
+- 適用：定期重訓、快照備份
+
+**部署目標對應**
+
+| 部署目標 | 推薦版本格式 | 說明 |
+|----------|--------------|------|
+| HuggingFace Hub | Semantic + Git Tag | 使用 `--revision v2` |
+| Ollama | Semantic | `model:v2`, `model:latest` |
+| API 服務 | Date | `model-2025-01-07` |
+| 本地測試 | Semantic | 簡單明瞭 |
 
 ### 階段 4: 確認執行
 
@@ -155,6 +206,13 @@ success_criteria:
 execution:
   type: remote_ssh
   host: user@gpu-server
+
+# 版本管理
+versioning:
+  strategy: semantic         # semantic | date | hybrid
+  naming: "{task}-v{n}"      # entity-sentiment-v1
+  retention: 3               # 保留最近 3 個版本
+  deploy_target: huggingface # huggingface | ollama | api | local
 ```
 
 ## 教練提問模板
@@ -208,6 +266,30 @@ execution:
 - 有 baseline 可以比較嗎？
 ```
 
+### 版本管理策略
+
+當討論版本管理時：
+
+```
+關於模型版本管理，我建議使用 Semantic 版本：
+
+**推薦策略**: Semantic (v1, v2, v3)
+- 原因：清晰的版本演進、HuggingFace 原生支援
+
+**命名格式**: entity-sentiment-v1
+- 在 HuggingFace Hub 使用 git tag 管理版本
+
+**保留策略**: 保留最近 3 個版本
+- deployed 版本永久保留
+- 實驗版本評估後清理
+
+其他選項：
+- Date 版本 (2025-01-07)：適合 API 服務、定期重訓
+- Hybrid (v2-20250107)：同時追蹤版本和時間
+
+你預計部署到哪裡？這會影響版本管理策略的選擇。
+```
+
 ### 方案確認
 
 提出推薦方案時：
@@ -220,6 +302,9 @@ execution:
 
 **訓練方法**: SFT + LoRA (r=32)
 - 原因：500 筆資料適合此配置，穩定可靠
+
+**版本策略**: Semantic (v1, v2, v3)
+- 原因：迭代開發最適合、HuggingFace 原生支援
 
 **預期效能**: Macro-F1 > 80%
 - 基於類似任務的經驗值

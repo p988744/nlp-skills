@@ -285,6 +285,135 @@ version: v1  # 從 v2 回滾到 v1
 # 模型路徑自動切換到 v1
 ```
 
+## 版本管理策略
+
+### 策略選擇指南
+
+| 策略 | 格式 | 適用場景 | 業界案例 |
+|------|------|----------|----------|
+| **Semantic** | `v1`, `v2`, `v3` | 迭代開發、HuggingFace | Meta Llama-3.3, Qwen3 |
+| **Date** | `2025-01-07` | API 服務、快照備份 | OpenAI gpt-4o-2024-08-06 |
+| **Hybrid** | `v2-20250107` | 同時追蹤版本和時間 | Anthropic claude-3-5-sonnet-20241022 |
+
+### Semantic 版本（推薦）
+
+適用於大多數 fine-tuning 專案：
+
+```
+versions/
+├── v1/          # 初始版本
+├── v2/          # 參數調整
+├── v2.1/        # v2 的小修改
+├── v3/          # 資料擴增
+└── v3-exp/      # 實驗性版本
+```
+
+**命名規則**：
+```
+v{major}           - 主要版本（資料或架構變更）
+v{major}.{minor}   - 次要版本（參數調整）
+v{major}-exp       - 實驗版本（待驗證）
+```
+
+**部署整合**：
+```bash
+# HuggingFace Hub - 使用 git tag
+huggingface-cli upload org/model ./model --revision v2
+
+# Ollama - 使用 tag
+ollama push org/model:v2
+
+# 模型命名
+{task_name}-v{n}  # entity-sentiment-v2
+```
+
+### Date 版本
+
+適用於 API 服務和定期重訓：
+
+```
+versions/
+├── 2025-01-07/
+├── 2025-01-15/
+└── 2025-02-01/
+```
+
+**命名規則**：
+```
+YYYY-MM-DD                 # 日期
+YYYYMMDD                   # 緊湊格式
+{task_name}-YYYY-MM-DD     # 帶任務名
+```
+
+**部署整合**：
+```bash
+# API 服務
+model-2025-01-07
+
+# 版本回滾
+curl -X POST /api/v1/rollback?version=2025-01-07
+```
+
+### Hybrid 版本
+
+同時追蹤版本演進和時間點：
+
+```
+versions/
+├── v1-20250105/
+├── v2-20250107/
+└── v3-20250115/
+```
+
+**命名規則**：
+```
+v{n}-YYYYMMDD    # v2-20250107
+v{n}_{timestamp} # v2_1736236800
+```
+
+### 模型產出物命名
+
+```yaml
+# lineage.yaml 中的模型路徑
+model:
+  # Semantic 策略
+  adapter_path: models/adapter/v2
+  merged_path: models/merged/v2
+  gguf_path: models/gguf/entity-sentiment-v2-q8_0.gguf
+  hf_repo: org/entity-sentiment  # 使用 git tag: v2
+
+  # Date 策略
+  adapter_path: models/adapter/2025-01-07
+  merged_path: models/merged/2025-01-07
+  gguf_path: models/gguf/entity-sentiment-2025-01-07-q8_0.gguf
+  hf_repo: org/entity-sentiment-2025-01-07
+
+  # Hybrid 策略
+  adapter_path: models/adapter/v2-20250107
+  merged_path: models/merged/v2-20250107
+  gguf_path: models/gguf/entity-sentiment-v2-20250107-q8_0.gguf
+  hf_repo: org/entity-sentiment  # 使用 git tag: v2-20250107
+```
+
+### 版本保留策略
+
+```yaml
+# task.yaml
+versioning:
+  strategy: semantic
+  retention:
+    keep_recent: 3           # 保留最近 3 個版本
+    keep_deployed: true      # 永久保留已部署版本
+    keep_best: true          # 保留效能最佳版本
+    cleanup_exp_after: 7d    # 實驗版本 7 天後清理
+```
+
+**清理規則**：
+1. 永遠保留：`deployed` 狀態的版本
+2. 永遠保留：歷史最佳效能版本
+3. 保留最近 N 個版本（預設 3）
+4. 實驗版本：成功則合併，失敗則清理
+
 ## 最佳實踐
 
 ### 版本命名
