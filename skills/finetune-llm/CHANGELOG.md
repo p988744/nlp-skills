@@ -6,6 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [0.3.2] - 2026-01-12
+
+### Added
+- **Plan-based Execution Tracking** (inspired by superpowers)
+  - `writing-plans` skill - Create detailed execution plans with bite-sized tasks
+  - `executing-plans` skill - Batch execution with checkpoint reviews
+  - Plans stored in `{task}/plans/YYYY-MM-DD-{goal}.md`
+- **New Commands**
+  - `/nlp-skills:write-plan` - Write training plan
+  - `/nlp-skills:execute-plan` - Execute plan with checkpoints (3 tasks per batch)
+- **Plan File Hook** - Auto-verify plan format on write
+
+### Changed
+- **Simplified Commands** - All commands now follow superpowers pattern
+  - Reduced from ~100 lines to ~10 lines each
+  - Commands just trigger skills, not embed full instructions
+  - Added `disable-model-invocation: true` for user-only invocation
+
+---
+
 ## [0.3.1] - 2026-01-07
 
 ### Added
