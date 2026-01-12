@@ -4,6 +4,16 @@
       "event": "PostToolUse",
       "matcher": {
         "toolName": "Write",
+        "pathPattern": "**/plans/*.md"
+      },
+      "type": "prompt",
+      "prompt": "A plan file was just created or updated. Please verify:\n\n1. Plan has clear goal and target version\n2. All tasks are properly formatted with [pending] status\n3. Each task has steps, verification criteria, and expected output\n4. Tasks are properly sequenced (2-5 minutes each)\n\nRemind user:\n- Use /nlp-skills:execute-plan to start batch execution\n- Plans are executed in batches of 3 tasks with checkpoint reviews",
+      "stopAfterMatch": false
+    },
+    {
+      "event": "PostToolUse",
+      "matcher": {
+        "toolName": "Write",
         "pathPattern": "**/data_source.yaml"
       },
       "type": "prompt",

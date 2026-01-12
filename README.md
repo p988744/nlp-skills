@@ -29,7 +29,7 @@ claude --plugin-dir /path/to/nlp-skills
 
 ## Components
 
-### Skills (5 Specialized Domains)
+### Skills (7 Specialized Domains)
 
 | Skill | Triggers | Description |
 |-------|----------|-------------|
@@ -37,9 +37,11 @@ claude --plugin-dir /path/to/nlp-skills
 | **llm-knowledge** | "what is LoRA", "compare models" | Knowledge base |
 | **task-manager** | "list tasks", "compare versions" | Multi-task management |
 | **data-pipeline** | "data source", "where does data come from" | Data pipeline configuration |
+| **writing-plans** | "write a plan", "create training plan" | Plan-based task tracking |
+| **executing-plans** | "execute plan", "run the plan" | Batch execution with checkpoints |
 | **finetune-llm** | "fine-tune LLM", "training workflow" | Overview skill |
 
-### Commands (7 Quick Actions)
+### Commands (9 Quick Actions)
 
 | Command | Description |
 |---------|-------------|
@@ -48,6 +50,8 @@ claude --plugin-dir /path/to/nlp-skills
 | `/nlp-skills:new-task` | Create new task |
 | `/nlp-skills:data-source` | Configure data sources |
 | `/nlp-skills:generate` | Generate project structure |
+| `/nlp-skills:write-plan` | Write detailed execution plan |
+| `/nlp-skills:execute-plan` | Execute plan with checkpoint reviews |
 | `/nlp-skills:evaluate` | Run evaluation analysis |
 | `/nlp-skills:deploy` | Deploy model |
 
@@ -95,6 +99,8 @@ Each task is a fully independent, self-contained project:
 {task-name}/
 ├── task.yaml               # Task definition
 ├── data_source.yaml        # Data source config (reproducible)
+├── plans/                  # Execution plans (plan-based tracking)
+│   └── YYYY-MM-DD-goal.md
 ├── versions/               # Version tracking (full lineage)
 │   ├── v1/
 │   │   ├── config.yaml

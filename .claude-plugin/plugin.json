@@ -32,7 +32,9 @@
     "./commands/data-source.md",
     "./commands/generate.md",
     "./commands/evaluate.md",
-    "./commands/deploy.md"
+    "./commands/deploy.md",
+    "./commands/write-plan.md",
+    "./commands/execute-plan.md"
   ],
   "agents": [
     "./agents/goal-clarifier.md",
